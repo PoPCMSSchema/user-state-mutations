@@ -11,6 +11,7 @@ use PoP\ComponentModel\Misc\GeneralUtils;
 use PoP\ComponentModel\MutationResolvers\AbstractMutationResolver;
 use PoP\ComponentModel\Error;
 use PoPSchema\UserStateMutations\Facades\UserStateTypeAPIFacade;
+use PoPSchema\UserState\State\ApplicationStateUtils;
 
 class LoginMutationResolver extends AbstractMutationResolver
 {
@@ -84,7 +85,7 @@ class LoginMutationResolver extends AbstractMutationResolver
         $user = $loginResult;
 
         // Modify the routing-state with the newly logged in user info
-        PoP_UserLogin_Engine_Utils::calculateAndSetVarsUserState(ApplicationState::$vars);
+        ApplicationStateUtils::setUserStateVars(ApplicationState::$vars);
 
         $userID = $cmsusersresolver->getUserId($user);
         HooksAPIFacade::getInstance()->doAction('gd:user:loggedin', $userID);

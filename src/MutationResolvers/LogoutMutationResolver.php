@@ -9,6 +9,7 @@ use PoP\ComponentModel\State\ApplicationState;
 use PoP\Translation\Facades\TranslationAPIFacade;
 use PoPSchema\UserStateMutations\Facades\UserStateTypeAPIFacade;
 use PoP\ComponentModel\MutationResolvers\AbstractMutationResolver;
+use PoPSchema\UserState\State\ApplicationStateUtils;
 
 class LogoutMutationResolver extends AbstractMutationResolver
 {
@@ -34,7 +35,7 @@ class LogoutMutationResolver extends AbstractMutationResolver
         $userStateTypeAPI->logout();
 
         // Modify the routing-state with the newly logged in user info
-        \PoP_UserLogin_Engine_Utils::calculateAndSetVarsUserState(ApplicationState::$vars);
+        ApplicationStateUtils::setUserStateVars(ApplicationState::$vars);
 
         HooksAPIFacade::getInstance()->doAction('gd:user:loggedout', $user_id);
         return $user_id;
