@@ -9,7 +9,7 @@ use PoP\Hooks\Facades\HooksAPIFacade;
 use PoP\ComponentModel\State\ApplicationState;
 use PoP\ComponentModel\Misc\GeneralUtils;
 use PoP\ComponentModel\MutationResolvers\AbstractMutationResolver;
-use PoP\ComponentModel\Error;
+use PoP\ComponentModel\ErrorHandling\Error;
 use PoPSchema\UserStateMutations\Facades\UserStateTypeAPIFacade;
 use PoPSchema\UserState\State\ApplicationStateUtils;
 
