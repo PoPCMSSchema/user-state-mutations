@@ -22,25 +22,26 @@ class LoginMutationResolver extends AbstractMutationResolver
         $pwd = $form_data[MutationInputProperties::PASSWORD];
 
         if (!$username_or_email) {
-            $errors[] = TranslationAPIFacade::getInstance()->__('Please supply your username or email', 'ure-pop');
+            $errors[] = TranslationAPIFacade::getInstance()->__('Please supply your username or email', 'user-state-mutations');
         }
         if (!$pwd) {
-            $errors[] = TranslationAPIFacade::getInstance()->__('Please supply your password', 'ure-pop');
+            $errors[] = TranslationAPIFacade::getInstance()->__('Please supply your password', 'user-state-mutations');
         }
 
         $vars = ApplicationState::getVars();
         if ($vars['global-userstate']['is-user-logged-in']) {
-            $user_id = $vars['global-userstate']['current-user-id'];
-            $cmsusersapi = \PoPSchema\Users\FunctionAPIFactory::getInstance();
-            $cmsuseraccountapi = \PoP\UserAccount\FunctionAPIFactory::getInstance();
-            $errors[] = sprintf(
-                TranslationAPIFacade::getInstance()->__('You are already logged in as <a href="%s">%s</a>, <a href="%s">logout</a>?', 'pop-application'),
-                $cmsusersapi->getUserURL($user_id),
-                $cmsusersapi->getUserDisplayName($user_id),
-                $cmsuseraccountapi->getLogoutURL()
-            );
+            $errors[] = $this->getUserAlreadyLoggedInErrorMessage($user_id);
         }
         return $errors;
+    }
+
+    /**
+     * @param mixed $user_id Maybe int, maybe string
+     */
+    protected function getUserAlreadyLoggedInErrorMessage($user_id): string
+    {
+        $translationAPI = TranslationAPIFacade::getInstance();
+        return $translationAPI->__('You are already logged in', 'user-state-mutations');
     }
 
     /**
