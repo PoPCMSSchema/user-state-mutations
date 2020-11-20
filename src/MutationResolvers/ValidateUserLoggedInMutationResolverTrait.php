@@ -18,8 +18,12 @@ trait ValidateUserLoggedInMutationResolverTrait
     {
         $vars = ApplicationState::getVars();
         if (!$vars['global-userstate']['is-user-logged-in']) {
-            $translationAPI = TranslationAPIFacade::getInstance();
-            $errors[] = $translationAPI->__('You are not logged in', 'user-state-mutations');
+            $errors[] = $this->getUserNotLoggedInErrorMessage();
         }
+    }
+    protected function getUserNotLoggedInErrorMessage(): string
+    {
+        $translationAPI = TranslationAPIFacade::getInstance();
+        return $translationAPI->__('You are not logged in', 'user-state-mutations');
     }
 }
