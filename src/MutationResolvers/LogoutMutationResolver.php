@@ -6,21 +6,18 @@ namespace PoPSchema\UserStateMutations\MutationResolvers;
 
 use PoP\Hooks\Facades\HooksAPIFacade;
 use PoP\ComponentModel\State\ApplicationState;
-use PoP\Translation\Facades\TranslationAPIFacade;
 use PoPSchema\UserStateMutations\Facades\UserStateTypeAPIFacade;
 use PoP\ComponentModel\MutationResolvers\AbstractMutationResolver;
 use PoPSchema\UserState\State\ApplicationStateUtils;
 
 class LogoutMutationResolver extends AbstractMutationResolver
 {
+    use ValidateUserLoggedInMutationResolverTrait;
+
     public function validateErrors(array $form_data): ?array
     {
         $errors = [];
-        // If the user is not logged in, then return the error
-        $vars = ApplicationState::getVars();
-        if (!$vars['global-userstate']['is-user-logged-in']) {
-            $errors[] = TranslationAPIFacade::getInstance()->__('You are not logged in.', 'pop-application');
-        }
+        $this->validateUserIsLoggedIn($errors);
         return $errors;
     }
     /**
