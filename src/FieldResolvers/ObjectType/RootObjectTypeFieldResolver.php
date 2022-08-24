@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PoPCMSSchema\UserStateMutations\FieldResolvers\ObjectType;
 
+use PoP\ComponentModel\TypeResolvers\InputTypeResolverInterface;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableObjectTypeFieldResolver;
 use PoP\ComponentModel\MutationResolvers\MutationResolverInterface;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
@@ -29,6 +30,7 @@ class RootObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
     }
     final protected function getUserObjectTypeResolver(): UserObjectTypeResolver
     {
+        /** @var UserObjectTypeResolver */
         return $this->userObjectTypeResolver ??= $this->instanceManager->getInstance(UserObjectTypeResolver::class);
     }
     final public function setLoginUserOneofMutationResolver(LoginUserOneofMutationResolver $loginUserOneofMutationResolver): void
@@ -37,6 +39,7 @@ class RootObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
     }
     final protected function getLoginUserOneofMutationResolver(): LoginUserOneofMutationResolver
     {
+        /** @var LoginUserOneofMutationResolver */
         return $this->loginUserOneofMutationResolver ??= $this->instanceManager->getInstance(LoginUserOneofMutationResolver::class);
     }
     final public function setLogoutUserMutationResolver(LogoutUserMutationResolver $logoutUserMutationResolver): void
@@ -45,6 +48,7 @@ class RootObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
     }
     final protected function getLogoutUserMutationResolver(): LogoutUserMutationResolver
     {
+        /** @var LogoutUserMutationResolver */
         return $this->logoutUserMutationResolver ??= $this->instanceManager->getInstance(LogoutUserMutationResolver::class);
     }
     final public function setLoginUserByOneofInputObjectTypeResolver(LoginUserByOneofInputObjectTypeResolver $loginUserByOneofInputObjectTypeResolver): void
@@ -53,9 +57,13 @@ class RootObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
     }
     final protected function getLoginUserByOneofInputObjectTypeResolver(): LoginUserByOneofInputObjectTypeResolver
     {
+        /** @var LoginUserByOneofInputObjectTypeResolver */
         return $this->loginUserByOneofInputObjectTypeResolver ??= $this->instanceManager->getInstance(LoginUserByOneofInputObjectTypeResolver::class);
     }
 
+    /**
+     * @return array<class-string<ObjectTypeResolverInterface>>
+     */
     public function getObjectTypeResolverClassesToAttachTo(): array
     {
         return [
@@ -63,6 +71,9 @@ class RootObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function getFieldNamesToResolve(): array
     {
         return [
@@ -80,6 +91,9 @@ class RootObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
         };
     }
 
+    /**
+     * @return array<string,InputTypeResolverInterface>
+     */
     public function getFieldArgNameTypeResolvers(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): array
     {
         return match ($fieldName) {
