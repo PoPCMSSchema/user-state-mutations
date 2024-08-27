@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace PoPCMSSchema\UserStateMutations\ObjectTypeResolverPickers;
 
 use PoPCMSSchema\UserStateMutations\TypeResolvers\UnionType\RootLoginUserMutationErrorPayloadUnionTypeResolver;
-use PoPCMSSchema\UserStateMutations\ObjectTypeResolverPickers\AbstractInvalidUsernameErrorPayloadObjectTypeResolverPicker;
+use PoPCMSSchema\UserStateMutations\ObjectTypeResolverPickers\AbstractPasswordIsIncorrectErrorPayloadObjectTypeResolverPicker;
 use PoP\ComponentModel\TypeResolvers\UnionType\UnionTypeResolverInterface;
 
-class InvalidUsernameMutationErrorPayloadObjectTypeResolverPicker extends AbstractInvalidUsernameErrorPayloadObjectTypeResolverPicker
+class PasswordIsIncorrectErrorPayloadObjectTypeResolverPicker extends AbstractPasswordIsIncorrectErrorPayloadObjectTypeResolverPicker
 {
     /**
      * @return array<class-string<UnionTypeResolverInterface>>
